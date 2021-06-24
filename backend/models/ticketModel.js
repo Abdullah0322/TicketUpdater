@@ -1,23 +1,22 @@
 import mongoose from 'mongoose'
+const headSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+      },
+)
+
+const bodySchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+      },
+)
+
 const ticketSchema = mongoose.Schema(
     {
-      title: {
-        type: String,
-        required: true,
-      },
+      heading:[headSchema],
 
-      url: {
-        type: String,
-        required: true,
-      },
-      status: {
-        type: String,
-        required: true,
-      },
-      priority: {
-        type: String,
-        required: true,
-      },
+      body:[bodySchema]
+
       
     },
     {

@@ -1,25 +1,35 @@
-import axios from 'axios'
-import{
-TICKET_LIST_REQUEST,
-TICKET_LIST_SUCCESS,
-TICKET_LIST_FAIL,
-}from '../constants/ticketConstants'
+import axios from "axios";
+import {
+  TICKET_LIST_REQUEST,
+  TICKET_LIST_SUCCESS,
+  TICKET_LIST_FAIL,
+  TICKET_CREATE_REQUEST,
+  TICKET_CREATE_SUCCESS,
+  TICKET_CREATE_FAIL,
+  TICKET_CREATE_RESET,
 
-export const listTickets = (keyword = '', pageNumber = '') => async (
-    dispatch
-  ) => {
+  TICKET_DELETE_REQUEST,
+  TICKET_DELETE_SUCCESS,
+  TICKET_DELETE_FAIL,
+
+
+} from "../constants/ticketConstants";
+
+export const listTickets =
+  (keyword = "", pageNumber = "") =>
+  async (dispatch) => {
     try {
-      dispatch({ type: TICKET_LIST_REQUEST })
-  
+      dispatch({ type: TICKET_LIST_REQUEST });
+
       const { data } = await axios.get(
         `/api/tickets?keyword=${keyword}&pageNumber=${pageNumber}`
-      )
-  
+      );
+
       dispatch({
         type: TICKET_LIST_SUCCESS,
         payload: data,
-      })
-      console.log("data----------",data)
+      });
+      console.log(data);
     } catch (error) {
       dispatch({
         type: TICKET_LIST_FAIL,
@@ -27,6 +37,79 @@ export const listTickets = (keyword = '', pageNumber = '') => async (
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
+      });
+    }
+  };
+
+// export const createTicket =
+//   ({ ticketdetails }) =>
+//   async (dispatch, getState) => {
+//     try {
+//       dispatch({
+//         type: TICKET_CREATE_REQUEST,
+//       });
+
+//       const { data } = await axios.post(`/api/tickets`, ticketdetails);
+
+//       dispatch({
+//         type: TICKET_CREATE_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       const message =
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message;
+//       dispatch({
+//         type: TICKET_CREATE_FAIL,
+//         payload: message,
+//       });
+//     }
+//   };
+
+  export const createTicket = () => async dispatch => {
+    try {
+      dispatch({
+        type: TICKET_CREATE_REQUEST,
+      })
+
+      const { data } = await axios.post(`/api/tickets`, {})
+  
+      dispatch({
+        type: TICKET_CREATE_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      dispatch({
+        type: TICKET_CREATE_FAIL,
+        payload: message,
       })
     }
   }
+
+export const deleteTicket = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_DELETE_REQUEST,
+    });
+
+    await axios.delete(`/api/tickets/${id}`);
+
+    dispatch({
+      type: TICKET_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};

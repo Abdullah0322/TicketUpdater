@@ -1,17 +1,24 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import {
+  ticketCreateReducer,
+  ticketDeleteReducer,
      ticketListReducer  } from './reducers/ticketReducers'
  import { composeWithDevTools } from 'redux-devtools-extension'
 
   const reducer = combineReducers({
      ticketList: ticketListReducer,
+     ticketCreate:ticketCreateReducer,
+     ticketDelete:ticketDeleteReducer,
 
    })
+   const initialState = {
+   }
   const middleware = [thunk]
+
 const store = createStore(
   reducer,
-//   initialState,
+   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
 

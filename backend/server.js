@@ -8,6 +8,7 @@ dotenv.config()
 console.log('DB COnnetion',process.env.MONGO_URI)
 import connectDB from './config/db.js'
 import ticketRoutes from './routes/ticketRoutes.js'
+import headingRoutes from './routes/headingRoutes.js'
 
 connectDB()
 const app = express()
@@ -19,6 +20,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json())
 app.use(express.static('public'))
 app.use('/api/tickets', ticketRoutes)
+app.use('/api/headings', headingRoutes)
+
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))

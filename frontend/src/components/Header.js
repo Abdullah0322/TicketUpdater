@@ -15,7 +15,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
           <LinkContainer to='/'>
-            <Navbar.Brand>{`Dailt Ticket Update`}</Navbar.Brand>
+            <Navbar.Brand>{`Daily Ticket Update`}</Navbar.Brand>
           </LinkContainer>
            
             <Nav className='ml-auto'>
