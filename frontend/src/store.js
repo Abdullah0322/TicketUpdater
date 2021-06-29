@@ -3,13 +3,18 @@ import thunk from 'redux-thunk';
 import {
   ticketCreateReducer,
   ticketDeleteReducer,
-     ticketListReducer  } from './reducers/ticketReducers'
+  ticketHeadingCreateReducer,
+     ticketListReducer,  
+     ticketUpdateReducer} from './reducers/ticketReducers'
  import { composeWithDevTools } from 'redux-devtools-extension'
 
   const reducer = combineReducers({
      ticketList: ticketListReducer,
      ticketCreate:ticketCreateReducer,
      ticketDelete:ticketDeleteReducer,
+     ticketHeadingCreate:ticketHeadingCreateReducer,
+     ticketUpdate:ticketUpdateReducer,
+  
 
    })
    const initialState = {

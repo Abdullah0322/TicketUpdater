@@ -7,12 +7,16 @@ import {
   TICKET_CREATE_SUCCESS,
   TICKET_CREATE_FAIL,
   TICKET_CREATE_RESET,
-
   TICKET_DELETE_REQUEST,
   TICKET_DELETE_SUCCESS,
   TICKET_DELETE_FAIL,
-
-
+  TICKET_CREATE_HEADING_REQUEST,
+  TICKET_CREATE_HEADING_SUCCESS,
+  TICKET_CREATE_HEADING_FAIL,
+  TICKET_UPDATE_REQUEST,
+  TICKET_UPDATE_SUCCESS,
+  TICKET_UPDATE_FAIL,
+  TICKET_UPDATE_RESET,
 } from "../constants/ticketConstants";
 
 export const listTickets =
@@ -67,29 +71,29 @@ export const listTickets =
 //     }
 //   };
 
-  export const createTicket = () => async dispatch => {
-    try {
-      dispatch({
-        type: TICKET_CREATE_REQUEST,
-      })
+export const createTicket = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_CREATE_REQUEST,
+    });
 
-      const { data } = await axios.post(`/api/tickets`, {})
-  
-      dispatch({
-        type: TICKET_CREATE_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      dispatch({
-        type: TICKET_CREATE_FAIL,
-        payload: message,
-      })
-    }
+    const { data } = await axios.post(`/api/tickets`, {});
+
+    dispatch({
+      type: TICKET_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_CREATE_FAIL,
+      payload: message,
+    });
   }
+};
 
 export const deleteTicket = (id) => async (dispatch) => {
   try {
@@ -109,6 +113,93 @@ export const deleteTicket = (id) => async (dispatch) => {
         : error.message;
     dispatch({
       type: TICKET_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const createTicketHeading = (ticketId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_CREATE_HEADING_REQUEST,
+    });
+
+    await axios.post(`/api/tickets/${ticketId}/headings`, {});
+
+    dispatch({
+      type: TICKET_CREATE_HEADING_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_CREATE_HEADING_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const updateTicket = (ticket) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_UPDATE_REQUEST,
+    });
+
+    const { data } = await axios.put(
+      `/api/tickets/${ticket._id}/headings/${localStorage.getItem("id")}`,
+      ticket
+    );
+
+    dispatch({
+      type: TICKET_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({ type: TICKET_LIST_SUCCESS, payload: data });
+    console.log(ticket._id);
+    console.log(ticket);
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: TICKET_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+
+
+export const updateTicketbody = (ticket) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_UPDATE_REQUEST,
+    });
+
+    const { data } = await axios.put(
+      `/api/tickets/${ticket._id}/body/${localStorage.getItem("id")}`,
+      ticket
+    );
+
+    dispatch({
+      type: TICKET_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({ type: TICKET_LIST_SUCCESS, payload: data });
+    console.log(ticket._id);
+    console.log(ticket);
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: TICKET_UPDATE_FAIL,
       payload: message,
     });
   }

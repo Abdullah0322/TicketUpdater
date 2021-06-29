@@ -1,0 +1,26 @@
+.head{
+color:darkorange;
+font-size: 10px;
+}
+
+.body{
+    width: 250px;
+    word-wrap: break-word;
+  
+}
+
+.btn-sm{
+    position: relative;
+    float: right;
+}
+
+.google{
+    width: 250px;
+    height: 250px;
+align-content: center;
+align-items: center;
+padding-left: 40px;
+padding-top: 85px;
+background-color:chocolate;
+}
+

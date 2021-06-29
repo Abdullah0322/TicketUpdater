@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import CreateTicket from "./pages/Createticket";
 import Home from "./pages/Home";
 import Header from "./components/Header";
+import Login from "./pages/Login";
+import Email from "./pages/Email";
 
 function App() {
   return (
@@ -17,7 +19,10 @@ function App() {
             <Route path="/" exact component={Home} />
 
             <Route path="/create" component={CreateTicket} />
+            <Route path="/login" component={Login} />
+            <Route path="/sendmail" component={Email} />
           </Container>
+
         </main>
       </Router>
     </>

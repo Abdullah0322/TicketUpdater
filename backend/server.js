@@ -8,7 +8,11 @@ dotenv.config()
 console.log('DB COnnetion',process.env.MONGO_URI)
 import connectDB from './config/db.js'
 import ticketRoutes from './routes/ticketRoutes.js'
-import headingRoutes from './routes/headingRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import emailRoutes from './routes/emailRoutes.js'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+
 
 connectDB()
 const app = express()
@@ -16,11 +20,15 @@ const app = express()
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.static('public'))
 app.use('/api/tickets', ticketRoutes)
-app.use('/api/headings', headingRoutes)
+app.use('/api/', userRoutes)
+app.use('/api/', emailRoutes)
+
+
 
 
 const __dirname = path.resolve()

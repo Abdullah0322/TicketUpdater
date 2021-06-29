@@ -12,6 +12,17 @@ import{
     TICKET_DELETE_SUCCESS,
     TICKET_DELETE_FAIL,
 
+    TICKET_CREATE_HEADING_REQUEST,
+    TICKET_CREATE_HEADING_SUCCESS,
+    TICKET_CREATE_HEADING_FAIL,
+    TICKET_CREATE_HEADING_RESET,
+
+    TICKET_UPDATE_REQUEST,
+    TICKET_UPDATE_SUCCESS,
+    TICKET_UPDATE_FAIL,
+    TICKET_UPDATE_RESET
+
+
 
 }from '../constants/ticketConstants'
 export const ticketListReducer = (state = { tickets: [] }, action) => {
@@ -61,3 +72,36 @@ export const ticketListReducer = (state = { tickets: [] }, action) => {
         return state
     }
   }
+
+
+  export const ticketHeadingCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+      case TICKET_CREATE_HEADING_REQUEST:
+        return { loading: true }
+      case TICKET_CREATE_HEADING_SUCCESS:
+        return { loading: false, success: true }
+      case TICKET_CREATE_HEADING_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_CREATE_HEADING_RESET:
+        return {}
+      default:
+        return state
+    }
+  }
+
+
+  export const ticketUpdateReducer = (state = { ticket: {} }, action) => {
+    switch (action.type) {
+      case TICKET_UPDATE_REQUEST:
+        return { loading: true }
+      case TICKET_UPDATE_SUCCESS:
+        return { loading: false, success: true, ticket: action.payload }
+      case TICKET_UPDATE_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_UPDATE_RESET:
+        return { ticket: {} }
+      default:
+        return state
+    }
+  }
+  

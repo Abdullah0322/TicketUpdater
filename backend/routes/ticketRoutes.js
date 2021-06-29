@@ -6,7 +6,9 @@ getTickets,
 getTicketsById,
 deleteTicket,
 createTicket,
-updateTicket
+updateTicket,
+createHeading,
+updateBody
 
 } from '../controllers/ticketController.js'
 
@@ -17,5 +19,8 @@ router
   .delete(deleteTicket)
   .get(getTicketsById)
   .put(updateTicket)
+  router.route('/:id/headings').post(createHeading)
+  router.route('/:ticketId/headings/:headingId').put(updateTicket);
+  router.route('/:ticketId/body/:bodyId').put(updateBody);
   
   export default router
