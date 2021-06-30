@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='primary' variant='dark ' expand='lg' collapseOnSelect>
+      <Navbar bg='primary' variant='dark ' expand='lg' collapseOnSelect className="header">
         <Container>
          
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -39,9 +39,9 @@ const Header = () => {
            
             <Nav className='ml-auto'>
            
-              <LinkContainer to='/create'>
+              <LinkContainer to='/sendmail'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i> Create a Ticket
+                  <i className='fas fa-shopping-cart'></i> Send Email
                 </Nav.Link>
                
               </LinkContainer>

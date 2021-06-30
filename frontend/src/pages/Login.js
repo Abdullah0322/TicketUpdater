@@ -87,7 +87,7 @@ const Login = ({ location, history }) => {
            
                 <div className="google" >
                 <GoogleLogin
-                  clientId="41827559099-qfdtqfghmce5qqgl1ausr07rpi0n4be2.apps.googleusercontent.com"
+                  clientId="807669913381-iekknmo55r3uv11orerdfm3sbi8v3opo.apps.googleusercontent.com"
                   buttonText="Login with Google"
                   onSuccess={responsesSuccess}
                   onFailure={responsesFail}

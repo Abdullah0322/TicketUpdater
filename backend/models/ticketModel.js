@@ -9,12 +9,18 @@ const bodySchema = mongoose.Schema({
 
 const ticketSchema = mongoose.Schema(
   {
-    heading: [headSchema],
-    body: [bodySchema],
-    heading2:[headSchema],
-    body2:[bodySchema]
+    heading: {
+      type: Array,
+    },
+    body: { type: Array },
+    heading2: {
+      type: Array,
+    },
+    body2: {
+      type: Array,
+    },
   },
-  
+
   {
     timestamps: true,
   }

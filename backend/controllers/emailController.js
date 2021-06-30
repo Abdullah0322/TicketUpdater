@@ -1,55 +1,46 @@
-import Hello from "./hello_template.js";
-import mailer from "nodemailer";
-import google from 'googleapis'
+import Hello  from "./hello_template.js";
+import mailer from 'nodemailer'
 
-
-const CLIENT_ID =  process.env.CLIENT_ID
-const CLEINT_SECRET =  process.env.CLEINT_SECRET,
-const REDIRECT_URI =  process.env.REDIRECT_URI
-const REFRESH_TOKEN =  process.env.REFRESH_TOKEN
-
-const oAuth2Client =   new google.auth.OAuth2(
-CLIENT_ID,
-CLEINT_SECRET,
-REDIRECT_URI
-);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-const getEmailData = (to, name, template) => {
+// const oAuth2Client = new google.auth.OAuth2(
+//   process.env.CLIENT_ID,
+//   process.env.CLEINT_SECRET,
+//   process.env.REDIRECT_URI
+// );
+// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+const getEmailData = (to, name, template,useremail) => {
+  
   let data = null;
-  const userloged = localStorage.getItem("email");
-  console.log("userloged: ", userloged);
-
-  console.log("to: ", to);
-  console.log("name: ", name);
-  data = {
-    from: "Abdullah Naveed<abdullah.naveed@gigalabs.co>",
-    to,
-    subject: `Daily Ticket Update`,
-    html: Hello(),
-  };
-  console.log("data: ", data);
+  console.log('to: ', to);
+  console.log('name: ', name);
+      data = {
+          from:"abdullahnaveed<abdullahnaveed71.am@gmail.com>",
+          to,
+          subject: `Daily Ticket Update`,
+          html: Hello(),
+          
+        }
+        console.log('data: ', data);
   return data;
+  
 };
 
-const sendEmail = async(to, name, type) => {
-  const accessToken = await oAuth2Client.getAccessToken();
+const sendEmail = (to, name, type,useremail) => {
+  
+    
   const smtpTransport = mailer.createTransport({
     service: "Gmail",
     auth: {
-      type: "OAuth2",
-      user: "abdullah.naveed@gigalabs.co",
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLEINT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN,
-      accessToken: accessToken,
-    },
+      user: "abdullahnaveed71.am@gmail.com",
+     pass:"malikdulli12"
+    }
   });
-  console.log("name: ", name);
-  const mail = getEmailData(to, name, type);
-  console.log("mail: ", mail);
+  
+  console.log('name: ', name);
+  const mail = getEmailData(to, name, type,useremail);
+  console.log('mail: ', mail);
   smtpTransport.sendMail(mail, function (error, response) {
     if (error) {
-      console.log("error: ", error);
+        console.log('error: ', error);
       console.log(error);
     } else {
       console.log("email send successfully");
@@ -58,4 +49,6 @@ const sendEmail = async(to, name, type) => {
   });
 };
 
-export { sendEmail };
+export{
+    sendEmail
+}

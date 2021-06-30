@@ -11,13 +11,13 @@ import {
 import "./ticket.css";
 
 const Ticket = ({ ticket }) => {
-  console.log("ticket: ", ticket);
+
   const [input, setInput] = useState(false);
   const [input1, setInput1] = useState(false);
   const [input2, setInput2] = useState(false);
   const [input3, setInput3] = useState(false);
   const [button, setButton] = useState(false);
-  const [headingName, setHeadingName] = useState("");
+  const [headingName, setHeadingName] = useState(ticket.heading);
   const [bodyName, setBodyName] = useState("");
   const [data, setData] = useState(ticket.heading);
   const handleClick = () => {
@@ -140,11 +140,10 @@ const Ticket = ({ ticket }) => {
   //   setDetail(clonedData);
   // }
 
-  const handleChange = (e, index, _id) => {
+
+  const handleChange = (e, index) => {
     const clonedData = [...headingName];
-    console.log(index);
-    console.log(_id);
-    localStorage.setItem("id", _id);
+    console.log("index", index);
     localStorage.setItem("index", index);
     console.log(e.target.value);
     // if(e.target.name){
@@ -189,63 +188,110 @@ const Ticket = ({ ticket }) => {
   //   }));
   //   console.log(e.target.value)
   // };
-  const update = () => {
-    const objIndex = localStorage.getItem("indexes");
-    console.log(objIndex);
 
-    console.log(ticket.heading);
-    //Log object to Console.
-    console.log("Before update: ", ticket.heading[0]);
 
-    //Update object's name property.
-    ticket.heading[objIndex].name = headingName;
+  // const update = () => {
+  //   const objIndex = localStorage.getItem("indexes");
+  //   console.log(objIndex);
 
-    //Log object to console again.
-    console.log("After update: ", ticket.heading[0]);
-  };
-  console.log(localticket.heading);
+  //   console.log(ticket.heading);
+  //   //Log object to Console.
+  //   console.log("Before update: ", ticket.heading[0]);
+
+  //   //Update object's name property.
+  //   ticket.heading[objIndex].name = headingName;
+
+  //   //Log object to console again.
+  //   console.log("After update: ", ticket.heading[0]);
+  // };
+  // console.log(localticket.heading);
+
+  const updateTicke = (e,i) => {
+    console.log("index", i);
+
+    console.log('headingName',headingName)
+    
+    ticket.heading[i]=headingName
+    
+    console.log('ticket.heading: ', ticket.heading);
+    
+    // const head = ticket.heading;
+    // console.log("heading: ", head);
+    // const heading = head.map((label, i) => {
+    //   console.log("label: ", label);
+    //   console.log("i", i);
+    //   if (i == index) {
+    //     return headingName;
+    //   } else {
+    //     return label;
+    //   }
+    //   if (label.includes("Ticket Title")) {
+    //     label = headingName;
+    //   }
+
+    //   // if(label=="Ticket Title"){
+    //   //   label="Updated Title"
+    //   // }
+    //   // if(label=="Priority"){
+    //   //   label="Update Priority"
+    //   // }
+
+    //   return label + headingName;
+  //  });
+     
+  
+  }
+const testfunction=(e,i)=>{
+
+updateTicke(e,i)
+handleChange(e,i);
+
+}
   return (
     <div>
-      {localStorage.getItem("response")?
-       <Button
-       variant="danger"
-       className="btn-sm"
-       onClick={() => deleteHandler(ticket._id)}
-     >
-       Delete Ticket
-     </Button>
-    :
-    "" 
-    }
-    {localStorage.getItem("response")?
-       <Button
-       variant="primary"
-       className="btn-sm"
-       onClick={() => submitHandler(ticket._id)}
-     >
-       Add Heading
-     </Button>
-    :
-    "" 
-    }
-     
-      
+      <Button onClick={updateTicke}> Check</Button>
+      {localStorage.getItem("response") ? (
+        <Button
+          variant="danger"
+          className="btn-sm"
+          onClick={() => deleteHandler(ticket._id)}
+        >
+          Delete Ticket
+        </Button>
+      ) : (
+        ""
+      )}
+      {localStorage.getItem("response") ? (
+        <Button
+          variant="primary"
+          className="btn-sm"
+          onClick={() => submitHandler(ticket._id)}
+        >
+          Add Heading
+        </Button>
+      ) : (
+        ""
+      )}
+
       <Table className="table table-borderless" variant="dark">
         <thead>
           <tr>
-            {localticket &&
-              localticket.heading.map((head, i) => (
-                <th key={head._id}>
+            {ticket &&
+              ticket.heading.map((head, i) => (
+                <th key={i}>
                   {" "}
                   {input == false ? (
-                    <h6 className="head">{head.name}</h6>
+                    <h6 className="head">{head}</h6>
                   ) : (
-                    <InputGroup className="mb-3" onClick={console.log(i)}>
+                    <InputGroup className="mb-3" >
                       <FormControl
-                        placeholder={head.name}
+                        placeholder={head + i}
                         name={head.headingName}
                         value={head.headingName}
-                        onChange={(e) => handleChange(e, i, head._id)}
+                        onChange={ (e)=>testfunction(e,i)
+                                
+                                               
+                        }
                         // onChange={set}
                         // value={hea  d && head.name}
                         // onChange={(e) => {
@@ -261,11 +307,7 @@ const Ticket = ({ ticket }) => {
               ))}
 
             <th>
-              
-              
-              
               {button == false ? (
-                
                 <Button
                   variant="primary"
                   className="btn-sm"
@@ -283,17 +325,17 @@ const Ticket = ({ ticket }) => {
                   variant="primary"
                   className="btn-sm"
                   onClick={() => {
-                    submitHandle();
+                    // submitHandle();
+                    updateTicke()
                     // key = product;
-                    // setButton(false);
-                    // setInput(false);
+                    setButton(false);
+                     setInput(false);
                   }}
                 >
                   Update
                 </Button>
               )}
             </th>
-           
           </tr>
         </thead>
         <tbody>
@@ -301,14 +343,14 @@ const Ticket = ({ ticket }) => {
             {ticket.body.map((body, i) => (
               <td>
                 {input1 == false ? (
-                  <div className="body"> {body.name}</div>
+                  <div className="body"> {body}</div>
                 ) : (
                   <InputGroup className="mb-3">
                     <FormControl
-                      placeholder={body.name}
+                      placeholder={body}
                       name={body.bodyName}
                       value={body.bodyName}
-                      onChange={(e) => bodyChange(e, i, body._id)}
+                      onChange={(e) => bodyChange(e, i)}
                     />
                   </InputGroup>
                 )}
@@ -375,11 +417,11 @@ const Ticket = ({ ticket }) => {
             {ticket.heading2.map((body, i) => (
               <td>
                 {input2 == false ? (
-                  <h6 className="head">{body.name}</h6>
+                  <h6 className="head">{body}</h6>
                 ) : (
                   <InputGroup className="mb-3">
                     <FormControl
-                      placeholder={body.name}
+                      placeholder={body}
                       name={body.bodyName}
                       value={body.bodyName}
                       onChange={(e) => bodyChange(e, i, body._id)}
@@ -423,11 +465,11 @@ const Ticket = ({ ticket }) => {
             {ticket.body2.map((body, i) => (
               <td>
                 {input3 == false ? (
-                  body.name
+                  body
                 ) : (
                   <InputGroup className="mb-3">
                     <FormControl
-                      placeholder={body.name}
+                      placeholder={body}
                       name={body.bodyName}
                       value={body.bodyName}
                       onChange={(e) => bodyChange(e, i, body._id)}

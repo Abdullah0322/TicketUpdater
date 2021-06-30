@@ -7,8 +7,13 @@ const Email=()=>{
   
     const [name,setName]=useState("");
     const [email,setEmail]=useState("");
+    const useremail=localStorage.getItem("email");
+    console.log('email: ', useremail);
+    
+
     const submitHandler = (e) => {
         e.preventDefault();
+
       const datatosend={
         name,
         email
@@ -21,10 +26,11 @@ const Email=()=>{
 
     return (
         <Container>
-          <h1>Send Template as Email</h1>
+         
           <br></br>
           <Row className="justify-content-md-center">
             <Col xs={12} md={6}>
+            <h1>Send Template as Email</h1>
               <Form onSubmit={submitHandler}>
                 <Form.Group controlId="name">
                   <Form.Label>Name</Form.Label>

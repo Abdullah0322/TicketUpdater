@@ -5,7 +5,7 @@ import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 
 const client = new OAuth2Client(
-  "41827559099-qfdtqfghmce5qqgl1ausr07rpi0n4be2.apps.googleusercontent.com"
+  "807669913381-iekknmo55r3uv11orerdfm3sbi8v3opo.apps.googleusercontent.com"
 );
 const googlelogin = asyncHandler(async (req, res) => {
   const { tokenId } = req.body;
@@ -13,7 +13,7 @@ const googlelogin = asyncHandler(async (req, res) => {
     .verifyIdToken({
       idToken: tokenId,
       audience:
-        "41827559099-qfdtqfghmce5qqgl1ausr07rpi0n4be2.apps.googleusercontent.com",
+        "807669913381-iekknmo55r3uv11orerdfm3sbi8v3opo.apps.googleusercontent.com",
     })
     .then((response) => {
       const { email, name, email_verified } = response.payload;

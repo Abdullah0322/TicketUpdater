@@ -46,8 +46,7 @@ const deleteTicket = asyncHandler(async (req, res) => {
 });
 
 // const Ticketcreate = asyncHandler(async (req, res) => {
-  
- 
+
 //   const ticket = new Ticket({
 //     heading: [
 //       { name: req.body },
@@ -70,29 +69,10 @@ const deleteTicket = asyncHandler(async (req, res) => {
 
 const createTicket = asyncHandler(async (req, res) => {
   const ticket = new Ticket({
-    heading: [
-      { name: "Ticket Title" },
-      { name: "Priority" },
-      { name: "Comments" },
-    ],
-    body: [
-      { name: "Sample name" },
-      { name: "Sample name" },
-      { name: "Sample name" },
- 
-    ],
-    heading2: [
-    
-      { name: "Ticket URL" },
-      { name: "Status" },
-      { name: "ETA" },
-    ],
-    body2: [
-      { name: "Sample name" },
-      { name: "Sample name" },
-      { name: "0 days" },
-      
-    ],
+    heading: ["Ticket Title", "Priority", "Comments"],
+    body: ["Sample name", "Sample name", "Sample name"],
+    heading2: ["Ticket URL", "Status", "ETA"],
+    body2: ["Sample name", "Sample name", "0 days"],
   });
 
   const createdTicket = await ticket.save();
@@ -195,12 +175,9 @@ const updateBody = asyncHandler(async (req, res) => {
   // }
 });
 
-
 const createHeading = asyncHandler(async (req, res) => {
   const ticket = await Ticket.findById(req.params.id);
-  const head = {
-    name: "sample name",
-  };
+  const head = "sample name";
 
   ticket.heading.push(head);
   ticket.body.push(head);
@@ -209,8 +186,43 @@ const createHeading = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Heading added" });
 });
 
+const updateTicke = asyncHandler(async (req, res) => {
+  const ticket = await Ticket.findById(req.params.id);
 
+  const heading = ticket.heading;
+  console.log('heading: ', heading);
+  const newHeading = heading.map((label,i) => {
+    console.log('label: ', label);
+    // if(label=="Ticket Title"){
+    //   label="Updated Title"
+    // }
+    // if(label=="Priority"){
+    //   label="Update Priority"
+    // }
+      
+    return label + i
+  })
+  console.log('newHeading: ', newHeading);
+  
+  // let replacedItem = ticket.heading.splice(
+  //   ticket.heading.indexOf("Comments"),
+  //   2,
+  //   "PYTHON"
+  // );
 
+ //['RUBaY']
+
+  // ticketFound.heading.forEach(element => {
+  //   if(element._id == headingId) {
+  //     element.name == req.body.headingName;
+  //     return;
+  //   }
+  // });
+
+  // console.log('ticketFound', ticketFound.heading[0])
+
+  // await ticketFound.save();
+});
 
 export {
   getTickets,
@@ -220,4 +232,5 @@ export {
   updateTicket,
   createHeading,
   updateBody,
+  updateTicke,
 };
