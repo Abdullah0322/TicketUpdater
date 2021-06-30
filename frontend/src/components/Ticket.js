@@ -11,7 +11,6 @@ import {
 import "./ticket.css";
 
 const Ticket = ({ ticket }) => {
-
   const [input, setInput] = useState(false);
   const [input1, setInput1] = useState(false);
   const [input2, setInput2] = useState(false);
@@ -85,7 +84,6 @@ const Ticket = ({ ticket }) => {
       })
     );
 
-    localStorage.removeItem("index");
   };
 
   const submitHandl = (e) => {
@@ -96,8 +94,6 @@ const Ticket = ({ ticket }) => {
         bodyName,
       })
     );
-
-    localStorage.removeItem("index");
   };
 
   const [localticket, setTicket] = useState(ticket);
@@ -140,12 +136,11 @@ const Ticket = ({ ticket }) => {
   //   setDetail(clonedData);
   // }
 
-
-  const handleChange = (e, index) => {
+  const handleChange =  (e, i) => {
     const clonedData = [...headingName];
-    console.log("index", index);
-    localStorage.setItem("index", index);
-    console.log(e.target.value);
+      console.log("Handle change => ", e.target.value, 'index', i)
+
+    
     // if(e.target.name){
     //   clonedData[index][e.target.name] = e.target.value;
     // }
@@ -153,7 +148,9 @@ const Ticket = ({ ticket }) => {
 
     //   console.log("we dont have value")
     //  }
-    setHeadingName(e.target.value);
+    // const data = e.target.value
+    ticket.heading[i] = e.target.value; 
+    // setHeadingName(e.target.value);
   };
 
   const bodyChange = (e, index, _id) => {
@@ -189,7 +186,6 @@ const Ticket = ({ ticket }) => {
   //   console.log(e.target.value)
   // };
 
-
   // const update = () => {
   //   const objIndex = localStorage.getItem("indexes");
   //   console.log(objIndex);
@@ -206,15 +202,16 @@ const Ticket = ({ ticket }) => {
   // };
   // console.log(localticket.heading);
 
-  const updateTicke = (e,i) => {
+  const updateTicke = (e, i) => {
     console.log("index", i);
 
-    console.log('headingName',headingName)
+    console.log("update headingName", headingName, 'index', i);
+
     
-    ticket.heading[i]=headingName
-    
-    console.log('ticket.heading: ', ticket.heading);
-    
+    ticket.heading[i] = headingName 
+
+    console.log("ticket.heading: ", ticket.heading);
+
     // const head = ticket.heading;
     // console.log("heading: ", head);
     // const heading = head.map((label, i) => {
@@ -237,16 +234,14 @@ const Ticket = ({ ticket }) => {
     //   // }
 
     //   return label + headingName;
-  //  });
-     
-  
-  }
-const testfunction=(e,i)=>{
-
-updateTicke(e,i)
-handleChange(e,i);
-
-}
+    //  });
+  };
+  const testfunction = (e, i) => {
+    e.persist();
+    console.log('-----------------',   e.target.value, 'ine',i)
+    handleChange(e, i);
+    // updateTicke(e, i);
+  };
   return (
     <div>
       <Button onClick={updateTicke}> Check</Button>
@@ -283,15 +278,12 @@ handleChange(e,i);
                   {input == false ? (
                     <h6 className="head">{head}</h6>
                   ) : (
-                    <InputGroup className="mb-3" >
+                    <InputGroup className="mb-3">
                       <FormControl
                         placeholder={head + i}
                         name={head.headingName}
                         value={head.headingName}
-                        onChange={ (e)=>testfunction(e,i)
-                                
-                                               
-                        }
+                        onChange={(e) => testfunction(e, i)}
                         // onChange={set}
                         // value={hea  d && head.name}
                         // onChange={(e) => {
@@ -326,10 +318,10 @@ handleChange(e,i);
                   className="btn-sm"
                   onClick={() => {
                     // submitHandle();
-                    updateTicke()
+                    updateTicke();
                     // key = product;
                     setButton(false);
-                     setInput(false);
+                    setInput(false);
                   }}
                 >
                   Update
