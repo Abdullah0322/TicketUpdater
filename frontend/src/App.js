@@ -9,12 +9,15 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Email from "./pages/Email";
 import Dashboard from "./pages/Dashboard";
+import Navbars from "./pages/Navbar";
 
 function App() {
   return (
     
       <Router>
         <Header></Header>
+        {/* <Navbars></Navbars> */}
+        
         <main className="py-3">
           <Container>
             <Route path="/" exact component={Home} />
@@ -23,6 +26,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/sendmail" component={Email} />
             <Route path="/dashboard" component={Dashboard} />
+            
 
           </Container>
 

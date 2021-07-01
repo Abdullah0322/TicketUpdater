@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Email=()=>{
-   
+  const notify = () => toast("Email sent Succesfully!");
   
     const [name,setName]=useState("");
     const [email,setEmail]=useState("");
@@ -24,13 +27,14 @@ const Email=()=>{
       console.log(email)
       }
 
+      
     return (
         <Container>
          
           <br></br>
           <Row className="justify-content-md-center">
             <Col xs={12} md={6}>
-            <h1>Send Template as Email</h1>
+            <h3>Send Template as Email</h3>
               <Form onSubmit={submitHandler}>
                 <Form.Group controlId="name">
                   <Form.Label>Name</Form.Label>
@@ -53,9 +57,20 @@ const Email=()=>{
                   ></Form.Control>
                 </Form.Group>
 
-                <Button type="submit" variant="primary">
+                <Button onClick={notify} type="submit" variant="primary">
                   Send Mail
                 </Button>
+                <ToastContainer 
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
               </Form>
             </Col>
           </Row>

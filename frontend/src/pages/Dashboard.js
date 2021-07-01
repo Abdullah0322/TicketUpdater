@@ -3,19 +3,33 @@ import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
   Badge,
-  Button,
+ 
   Card,
   Navbar,
   Nav,
-  Table,
+
   Container,
-  Row,
-  Col,
+
+
   Form,
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-
+import "./animate.min.css";
+import "./demo.css";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import Ticket from "../components/Ticket";
+import Paginate from "../components/Paginate";
+import "./light-bootstrap-dashboard-react.css"
+import { Table, Row, Col, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import "./home.css";
+import {
+    listTickets,
+    deleteTicket,
+    createTicket,
+  } from "../actions/ticketActions";
 const Dashboard=()=>{
     return (
       
@@ -26,9 +40,9 @@ const Dashboard=()=>{
                   <Card.Body>
                     <Row>
                       <Col xs="5">
-                        <div className="icon-big text-center icon-warning">
-                          <i className="nc-icon nc-chart text-warning"></i>
-                        </div>
+                      <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-chart text-warning"></i>
+                    </div>
                       </Col>
                       <Col xs="7">
                         <div className="numbers">

@@ -161,6 +161,7 @@ const Ticket = ({ ticket }) => {
       ) : (
         ""
       )}
+      
 
       <Table className="table table-borderless" variant="dark">
         <thead>

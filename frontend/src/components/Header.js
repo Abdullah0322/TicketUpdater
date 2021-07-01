@@ -25,8 +25,9 @@ const Header = () => {
 
 
   return (
+    
     <header>
-      <Navbar bg='primary' variant='dark ' expand='lg' collapseOnSelect className="header">
+      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect className="header">
         <Container>
          
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -39,13 +40,16 @@ const Header = () => {
            
             <Nav className='ml-auto'>
            
-              <LinkContainer to='/sendmail'>
+            <Nav.Item>
+                <LinkContainer to='/sendmail'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i> Send Email
+                {`Send Email`}
                 </Nav.Link>
                
               </LinkContainer>
-              {comment? (
+                </Nav.Item>
+                <Nav.Item>
+                {comment? (
                 <NavDropdown title={comment.data.user.name} id='username'>
                   <NavDropdown.Item onClick={logout}>
                     {`Logout`}
@@ -54,10 +58,13 @@ const Header = () => {
               ) : (
                 <LinkContainer to='/login'>
                   <Nav.Link>
-                    <i className='fas fa-user'></i> {`Sign In`}
+                    {`Sign In`} 
                   </Nav.Link>
                 </LinkContainer>
               )}
+               
+            
+                </Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>

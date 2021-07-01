@@ -45,6 +45,17 @@ const deleteTicket = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+const deleteAll = asyncHandler(async (req, res) => {
+ 
+ 
+  const tickets = await Ticket
+ await tickets.remove();
+    res.json({ message: "Ticket removed" });
+ 
+});
+
 // const Ticketcreate = asyncHandler(async (req, res) => {
 
 //   const ticket = new Ticket({
@@ -272,5 +283,6 @@ export {
   updateTicke,
   updateHeading,
   updateHeading2,
-  updateBody2
+  updateBody2,
+  deleteAll
 };
