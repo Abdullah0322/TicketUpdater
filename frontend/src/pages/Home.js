@@ -82,13 +82,13 @@ const Home = ({ match }) => {
     dispatch(createTicket());
   };
   return (
-    <>
+    <React.Fragment>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
+        <React.Fragment>
           <Row>
            
           {localStorage.getItem("response")?
@@ -112,9 +112,9 @@ const Home = ({ match }) => {
             page={page}
             keyword={keyword ? keyword : ""}
           />
-        </>
+        </React.Fragment>
       )}
-    </>
+   </React.Fragment>
   );
 };
 

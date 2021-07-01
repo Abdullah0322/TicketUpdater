@@ -9,6 +9,7 @@ import {
   updateTicketbody,
 } from "../actions/ticketActions";
 import "./ticket.css";
+import axios from "axios";
 
 const Ticket = ({ ticket }) => {
   const [input, setInput] = useState(false);
@@ -16,17 +17,18 @@ const Ticket = ({ ticket }) => {
   const [input2, setInput2] = useState(false);
   const [input3, setInput3] = useState(false);
   const [button, setButton] = useState(false);
-  const [headingName, setHeadingName] = useState(ticket.heading);
-  const [bodyName, setBodyName] = useState("");
-  const [data, setData] = useState(ticket.heading);
-  const handleClick = () => {
-    const newData = data.map((item) => {
-      return { ...item, name: "update" };
-    });
+  const [button1, setButton1] = useState(false);
 
-    setData(newData);
-    console.log(newData);
-  };
+  const [button2, setButton2] = useState(false);
+
+  const [button3, setButton3] = useState(false);
+
+  const [headingName, setHeadingName] = useState(ticket.heading);
+  const [bodyName, setBodyName] = useState(ticket.body);
+  const [bodyName2, setBodyName2] = useState(ticket.body2);
+  const [headingName2, setheadingName2] = useState(ticket.heading2);
+
+  const [data, setData] = useState(ticket.heading);
 
   const dispatch = useDispatch();
   const ticketDelete = useSelector((state) => state.ticketDelete);
@@ -60,191 +62,83 @@ const Ticket = ({ ticket }) => {
   const submitHandler = (e) => {
     dispatch(createTicketHeading(ticket._id, {}));
   };
-  // const heading= name
-  //  const updated = (id) => {
-  //     //  dispatch(updateTicket(ticket._id,heading._id,{
-  //     // name
-
-  //     //  }));
-
-  //     const elementsIndex= ticket.heading.findIndex(element=>element.id==id)
-  //     let newHeading=[...ticket.heading]
-  //     newHeading[elementsIndex] = {...newHeading[elementsIndex], completed: !newHeading[elementsIndex].completed}
-  //     setArr({
-  //       ticket:newHeading
-  //     })
-  //   };
-
-  const submitHandle = (e) => {
-    console.log(ticket._id);
-    dispatch(
-      updateTicket({
-        _id: ticket._id,
-        headingName,
-      })
-    );
-
-  };
-
-  const submitHandl = (e) => {
-    console.log(ticket._id);
-    dispatch(
-      updateTicketbody({
-        _id: ticket._id,
-        bodyName,
-      })
-    );
-  };
-
-  const [localticket, setTicket] = useState(ticket);
-
-  useEffect(() => {
-    setTicket(ticket);
-  }, [ticket]);
-
-  // const [arr,setArr]=useState([])
-
-  // const changeHandler = (name) => {
-  //   return ticket.heading.find((element) => {
-  //     return element.name === name;
-  //   });
-  //   console.log(name);
-  // };
-
-  // function getIndex(value) {
-  //   for (var i = 0; i < ticket.heading.length; i++) {
-  //     if (ticket.heading[i] === value) {
-  //       return i;
-  //     }
-  //     console.log(i);
-  //   }
-  //   return -1; //to handle the case where the value doesn't exist
-  // }
-
-  // const onChange=(id,value,element)=>{
-  //   ticket.heading.findIndex(element=>element.id==id)
-  //   setArr({
-  //     value:element.value
-  //   })
-  // }
-
-  // const handleChange = (e, index) => {
-  //   const clonedData = [...detail];
-
-  //   clonedData[index][e.target.name] = e.target.value;
-
-  //   setDetail(clonedData);
-  // }
-
-  const handleChange =  (e, i) => {
+  const handleChange = (e, i) => {
     const clonedData = [...headingName];
-      console.log("Handle change => ", e.target.value, 'index', i)
+    console.log("Handle change => ", e.target.value, "index", i);
 
-    
-    // if(e.target.name){
-    //   clonedData[index][e.target.name] = e.target.value;
-    // }
-    //  else{
-
-    //   console.log("we dont have value")
-    //  }
-    // const data = e.target.value
-    ticket.heading[i] = e.target.value; 
-    // setHeadingName(e.target.value);
+    ticket.heading[i] = e.target.value;
   };
-
-  const bodyChange = (e, index, _id) => {
-    const clonedData = [...bodyName];
-    console.log(index);
-    console.log(_id);
-    localStorage.setItem("id", _id);
-    localStorage.setItem("index", index);
-    console.log(e.target.value);
-    // if(e.target.name){
-    //   clonedData[index][e.target.name] = e.target.value;
-    // }
-    //  else{
-
-    //   console.log("we dont have value")
-    //  }
-    setBodyName(e.target.value);
-  };
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   setDetail((detail) => ({
-  //     ...detail,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  //   console.log(e.target.value)
-  // };
-  // const handleChange = (e) => {
-  //   e.preventDefault()
-  //   setDetail((detail) => ({
-  //     ...detail,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  //   console.log(e.target.value)
-  // };
-
-  // const update = () => {
-  //   const objIndex = localStorage.getItem("indexes");
-  //   console.log(objIndex);
-
-  //   console.log(ticket.heading);
-  //   //Log object to Console.
-  //   console.log("Before update: ", ticket.heading[0]);
-
-  //   //Update object's name property.
-  //   ticket.heading[objIndex].name = headingName;
-
-  //   //Log object to console again.
-  //   console.log("After update: ", ticket.heading[0]);
-  // };
-  // console.log(localticket.heading);
 
   const updateTicke = (e, i) => {
     console.log("index", i);
 
-    console.log("update headingName", headingName, 'index', i);
+    console.log("update headingName", headingName, "index", i);
 
-    
-    ticket.heading[i] = headingName 
+    ticket.heading[i] = headingName;
+    axios.post(`/api/tickets/${ticket._id}/heading`, ticket.heading);
 
     console.log("ticket.heading: ", ticket.heading);
-
-    // const head = ticket.heading;
-    // console.log("heading: ", head);
-    // const heading = head.map((label, i) => {
-    //   console.log("label: ", label);
-    //   console.log("i", i);
-    //   if (i == index) {
-    //     return headingName;
-    //   } else {
-    //     return label;
-    //   }
-    //   if (label.includes("Ticket Title")) {
-    //     label = headingName;
-    //   }
-
-    //   // if(label=="Ticket Title"){
-    //   //   label="Updated Title"
-    //   // }
-    //   // if(label=="Priority"){
-    //   //   label="Update Priority"
-    //   // }
-
-    //   return label + headingName;
-    //  });
   };
+
   const testfunction = (e, i) => {
     e.persist();
-    console.log('-----------------',   e.target.value, 'ine',i)
+    console.log("-----------------", e.target.value, "ine", i);
     handleChange(e, i);
-    // updateTicke(e, i);
   };
+
+  const testbody = (e, i) => {
+    e.persist();
+    console.log("-----------------", e.target.value, "ine", i);
+    handleBody(e, i);
+  };
+  const updateBody = (e, i) => {
+    ticket.body[i] = bodyName;
+    axios.post(`/api/tickets/${ticket._id}/body`, ticket.body);
+    console.log(ticket._id);
+  };
+
+  const handleBody = (e, i) => {
+    const clonedData = [...bodyName];
+    console.log("Handle change => ", e.target.value, "index", i);
+    ticket.body[i] = e.target.value;
+    console.log("ticket.body[i]: ", ticket.body);
+  };
+  const testHeading = (e, i) => {
+    e.persist();
+    console.log("-----------------", e.target.value, "ine", i);
+    handleHeading2(e, i);
+  };
+  const updateHeading2 = (e, i) => {
+    ticket.heading2[i] = headingName2;
+    axios.post(`/api/tickets/${ticket._id}/heading2`, ticket.heading2);
+    console.log(ticket._id);
+  };
+  const handleHeading2 = (e, i) => {
+    const clonedData = [...headingName2];
+    console.log("Handle change => ", e.target.value, "index", i);
+    ticket.heading2[i] = e.target.value;
+    console.log("ticket.body[i]: ", ticket.body);
+  };
+
+  const testBody2 = (e, i) => {
+    e.persist();
+    console.log("-----------------", e.target.value, "ine", i);
+    handleBody2(e, i);
+  };
+  const updateBody2 = (e, i) => {
+    ticket.body2[i] = bodyName2;
+    axios.post(`/api/tickets/${ticket._id}/body2`, ticket.body2);
+    console.log(ticket._id);
+  };
+  const handleBody2 = (e, i) => {
+    const clonedData = [...bodyName2];
+    console.log("Handle change => ", e.target.value, "index", i);
+    ticket.body2[i] = e.target.value;
+    console.log("ticket.body[i]: ", ticket.body);
+  };
+
   return (
     <div>
-      <Button onClick={updateTicke}> Check</Button>
       {localStorage.getItem("response") ? (
         <Button
           variant="danger"
@@ -280,7 +174,7 @@ const Ticket = ({ ticket }) => {
                   ) : (
                     <InputGroup className="mb-3">
                       <FormControl
-                        placeholder={head + i}
+                        placeholder={head}
                         name={head.headingName}
                         value={head.headingName}
                         onChange={(e) => testfunction(e, i)}
@@ -333,7 +227,7 @@ const Ticket = ({ ticket }) => {
         <tbody>
           <tr>
             {ticket.body.map((body, i) => (
-              <td>
+              <td key={i}>
                 {input1 == false ? (
                   <div className="body"> {body}</div>
                 ) : (
@@ -342,39 +236,15 @@ const Ticket = ({ ticket }) => {
                       placeholder={body}
                       name={body.bodyName}
                       value={body.bodyName}
-                      onChange={(e) => bodyChange(e, i)}
+                      onChange={(e) => testbody(e, i)}
                     />
                   </InputGroup>
                 )}
               </td>
             ))}
-            {/* <td>
-           {input==false? ticket.title :
-            <InputGroup className="mb-3" >
-          
-            <FormControl
-              placeholder={ticket.title}
-            />
-          </InputGroup>
-           } 
-         
-            
-           
-            </td>
-          <td>{ticket.priority}</td>
-          <td>
-            Zubair is creating exports for triangle question and waiting for
-            response about the number of samples in a set. Dmitrii is creating
-            charts for triangle test.
-          </td>
-          <td>
-            Zubair is creating exports for triangle question and waiting for
-            response about the number of samples in a set. Dmitrii is creating
-            charts for triangle test.
-          </td> */}
             <td>
               {" "}
-              {button == false ? (
+              {button1 == false ? (
                 <Button
                   variant="primary"
                   className="btn-sm"
@@ -382,7 +252,7 @@ const Ticket = ({ ticket }) => {
                     // key = product;
 
                     setInput1(true);
-                    setButton(true);
+                    setButton1(true);
                   }}
                 >
                   Edit
@@ -392,38 +262,39 @@ const Ticket = ({ ticket }) => {
                   variant="primary"
                   className="btn-sm"
                   onClick={() => {
-                    submitHandl();
-                    // key = product;
-                    // setButton(false);
-                    // setInput(false);
+                    updateBody();
+
+                    setButton1(false);
+                    setInput1(false);
                   }}
                 >
                   Update
                 </Button>
               )}
             </td>
-
-            <td></td>
           </tr>
           <tr>
-            {ticket.heading2.map((body, i) => (
-              <td>
+            {ticket.heading2.map((head2, i) => (
+              <td key={i}>
                 {input2 == false ? (
-                  <h6 className="head">{body}</h6>
+                  <h6 className="head">
+                    <b>{head2}</b>
+                  </h6>
                 ) : (
                   <InputGroup className="mb-3">
                     <FormControl
-                      placeholder={body}
-                      name={body.bodyName}
-                      value={body.bodyName}
-                      onChange={(e) => bodyChange(e, i, body._id)}
+                      placeholder={head2}
+                      name={head2.bodyName}
+                      value={head2.bodyName}
+                      onChange={(e) => testHeading(e, i)}
                     />
                   </InputGroup>
                 )}
               </td>
             ))}
             <td>
-              {button == false ? (
+              {" "}
+              {button2 == false ? (
                 <Button
                   variant="primary"
                   className="btn-sm"
@@ -431,7 +302,7 @@ const Ticket = ({ ticket }) => {
                     // key = product;
 
                     setInput2(true);
-                    setButton(true);
+                    setButton2(true);
                   }}
                 >
                   Edit
@@ -441,10 +312,10 @@ const Ticket = ({ ticket }) => {
                   variant="primary"
                   className="btn-sm"
                   onClick={() => {
-                    submitHandle();
-                    // key = product;
-                    // setButton(false);
-                    // setInput(false);
+                    updateHeading2();
+
+                    setButton2(false);
+                    setInput2(false);
                   }}
                 >
                   Update
@@ -452,26 +323,26 @@ const Ticket = ({ ticket }) => {
               )}
             </td>
           </tr>
-
           <tr>
-            {ticket.body2.map((body, i) => (
-              <td>
+            {ticket.body2.map((body2, i) => (
+              <td key={i}>
                 {input3 == false ? (
-                  body
+                  <b>{body2}</b>
                 ) : (
                   <InputGroup className="mb-3">
                     <FormControl
-                      placeholder={body}
-                      name={body.bodyName}
-                      value={body.bodyName}
-                      onChange={(e) => bodyChange(e, i, body._id)}
+                      placeholder={body2}
+                      name={body2.bodyName}
+                      value={body2.bodyName}
+                      onChange={(e) => testBody2(e, i)}
                     />
                   </InputGroup>
                 )}
               </td>
             ))}
             <td>
-              {button == false ? (
+              {" "}
+              {button3 == false ? (
                 <Button
                   variant="primary"
                   className="btn-sm"
@@ -479,7 +350,7 @@ const Ticket = ({ ticket }) => {
                     // key = product;
 
                     setInput3(true);
-                    setButton(true);
+                    setButton3(true);
                   }}
                 >
                   Edit
@@ -489,10 +360,10 @@ const Ticket = ({ ticket }) => {
                   variant="primary"
                   className="btn-sm"
                   onClick={() => {
-                    submitHandle();
-                    // key = product;
-                    // setButton(false);
-                    // setInput(false);
+                    updateBody2();
+
+                    setButton3(false);
+                    setInput3(false);
                   }}
                 >
                   Update
@@ -500,18 +371,6 @@ const Ticket = ({ ticket }) => {
               )}
             </td>
           </tr>
-          {/* <tr>
-          <td>Ticket URL</td>
-          <td>Status</td>
-          <td>ETA</td>
-        </tr>
-        <tr>
-          <td>
-            <a href={ticket.url}>click here to view the ticket</a>
-          </td>
-          <td>{ticket.status}</td>
-          <td>2 hours</td>
-        </tr> */}
         </tbody>
       </Table>
     </div>

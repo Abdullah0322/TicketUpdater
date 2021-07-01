@@ -9,7 +9,10 @@ createTicket,
 updateTicket,
 createHeading,
 updateBody,
-updateTicke
+updateTicke,
+updateHeading,
+updateHeading2,
+updateBody2
 
 
 } from '../controllers/ticketController.js'
@@ -24,5 +27,9 @@ router
   router.route('/:id/headings').post(createHeading)
   router.route('/:ticketId/headings/:headingId').put(updateTicket);
   router.route('/:ticketId/body/:bodyId').put(updateBody);
-  router.post('/:id/heading',updateTicke)
+  router.post('/:id/body',updateTicke)
+  router.post('/:id/heading',updateHeading)
+  router.post('/:id/heading2',updateHeading2)
+  router.post('/:id/body2',updateBody2)
+
   export default router
