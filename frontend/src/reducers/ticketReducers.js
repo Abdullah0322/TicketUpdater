@@ -20,7 +20,23 @@ import{
     TICKET_UPDATE_REQUEST,
     TICKET_UPDATE_SUCCESS,
     TICKET_UPDATE_FAIL,
-    TICKET_UPDATE_RESET
+    TICKET_UPDATE_RESET,
+
+    TICKET_CREATE_HEADING2_REQUEST,
+    TICKET_CREATE_HEADING2_SUCCESS,
+    TICKET_CREATE_HEADING2_FAIL,
+    TICKET_CREATE_HEADING2_RESET,
+
+TICKET_DELETE_HEADING2_REQUEST,
+TICKET_DELETE_HEADING2_SUCCESS,
+ TICKET_DELETE_HEADING2_FAIL,
+ TICKET_DELETE_HEADING2_RESET,
+
+
+ TICKET_DELETE_HEADING_REQUEST,
+ TICKET_DELETE_HEADING_SUCCESS,
+TICKET_DELETE_HEADING_FAIL,
+ TICKET_DELETE_HEADING_RESET,
 
 
 
@@ -88,6 +104,52 @@ export const ticketListReducer = (state = { tickets: [] }, action) => {
         return state
     }
   }
+  export const ticketHeadingDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+      case TICKET_DELETE_HEADING_REQUEST:
+        return { loading: true }
+      case TICKET_DELETE_HEADING_SUCCESS:
+        return { loading: false, success: true }
+      case TICKET_DELETE_HEADING_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_DELETE_HEADING_RESET:
+        return {}
+      default:
+        return state
+    }
+  }
+
+  export const ticketHeading2CreateReducer = (state = {}, action) => {
+    switch (action.type) {
+      case TICKET_CREATE_HEADING2_REQUEST:
+        return { loading: true }
+      case TICKET_CREATE_HEADING2_SUCCESS:
+        return { loading: false, success: true }
+      case TICKET_CREATE_HEADING2_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_CREATE_HEADING2_RESET:
+        return {}
+      default:
+        return state
+    }
+  }
+
+
+  export const ticketHeading2DeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+      case TICKET_DELETE_HEADING2_REQUEST:
+        return { loading: true }
+      case TICKET_DELETE_HEADING2_SUCCESS:
+        return { loading: false, success: true }
+      case TICKET_DELETE_HEADING2_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_DELETE_HEADING2_RESET:
+        return {}
+      default:
+        return state
+    }
+  }
+
 
 
   export const ticketUpdateReducer = (state = { ticket: {} }, action) => {

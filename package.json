@@ -17,6 +17,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
@@ -41,6 +42,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.9"
   }
 }

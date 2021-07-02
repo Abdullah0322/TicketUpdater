@@ -7,16 +7,24 @@ import mailer from 'nodemailer'
 //   process.env.REDIRECT_URI
 // );
 // oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-const getEmailData = (to, name, template,useremail) => {
+
+var maillist = [
+  'abdullahnaveed71.am@gmail.com',
+  'abdullah.naveed@gigalabs.co',
+  
+];
+const getEmailData = (to, name, template,useremail,cc) => {
   
   let data = null;
   console.log('to: ', to);
   console.log('name: ', name);
       data = {
-          from:"abdullahnaveed<abdullahnaveed71.am@gmail.com>",
+          from:`${name}`,
           to,
+          cc,
           subject: `Daily Ticket Update`,
           html: Hello(),
+          
           
         }
         console.log('data: ', data);
@@ -24,7 +32,7 @@ const getEmailData = (to, name, template,useremail) => {
   
 };
 
-const sendEmail = (to, name, type,useremail) => {
+const sendEmail = (to, name, type,useremail,cc) => {
   
     
   const smtpTransport = mailer.createTransport({
@@ -36,7 +44,7 @@ const sendEmail = (to, name, type,useremail) => {
   });
   
   console.log('name: ', name);
-  const mail = getEmailData(to, name, type,useremail);
+  const mail = getEmailData(to, name, type,useremail,cc);
   console.log('mail: ', mail);
   smtpTransport.sendMail(mail, function (error, response) {
     if (error) {

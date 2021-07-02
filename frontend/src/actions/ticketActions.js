@@ -13,10 +13,24 @@ import {
   TICKET_CREATE_HEADING_REQUEST,
   TICKET_CREATE_HEADING_SUCCESS,
   TICKET_CREATE_HEADING_FAIL,
+  TICKET_CREATE_HEADING2_REQUEST,
+  TICKET_CREATE_HEADING2_SUCCESS,
+  TICKET_CREATE_HEADING2_FAIL,
   TICKET_UPDATE_REQUEST,
   TICKET_UPDATE_SUCCESS,
   TICKET_UPDATE_FAIL,
   TICKET_UPDATE_RESET,
+  
+  TICKET_DELETE_HEADING2_REQUEST,
+TICKET_DELETE_HEADING2_SUCCESS,
+ TICKET_DELETE_HEADING2_FAIL,
+ TICKET_DELETE_HEADING2_RESET,
+
+
+ TICKET_DELETE_HEADING_REQUEST,
+ TICKET_DELETE_HEADING_SUCCESS,
+TICKET_DELETE_HEADING_FAIL,
+ TICKET_DELETE_HEADING_RESET,
 } from "../constants/ticketConstants";
 
 export const listTickets =
@@ -141,6 +155,75 @@ export const createTicketHeading = (ticketId) => async (dispatch) => {
   }
 };
 
+export const deleteTicketHeading = (ticketId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_DELETE_HEADING_REQUEST,
+    });
+
+    await axios.delete(`/api/tickets/${ticketId}/headings`, {});
+
+    dispatch({
+      type: TICKET_DELETE_HEADING_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_DELETE_HEADING_FAIL,
+      payload: message,
+    });
+  }
+};
+
+
+export const createTicketHeading2 = (ticketId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_CREATE_HEADING2_REQUEST,
+    });
+
+    await axios.post(`/api/tickets/${ticketId}/headings2`, {});
+
+    dispatch({
+      type: TICKET_CREATE_HEADING2_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_CREATE_HEADING2_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const deleteTicketHeading2 = (ticketId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_DELETE_HEADING2_REQUEST,
+    });
+
+    await axios.delete(`/api/tickets/${ticketId}/headings2`, {});
+
+    dispatch({
+      type: TICKET_DELETE_HEADING2_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: TICKET_DELETE_HEADING2_FAIL,
+      payload: message,
+    });
+  }
+};
 export const updateTicket = (ticket) => async (dispatch) => {
   try {
     dispatch({

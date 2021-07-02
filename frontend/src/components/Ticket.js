@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Table, InputGroup, FormControl } from "react-bootstrap";
+import {
+  Button,
+  Table,
+  InputGroup,
+  FormControl,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import {
   deleteTicket,
   createTicketHeading,
-  updateTicket,
-  updateTicketbody,
+  createTicketHeading2,
+  deleteTicketHeading,
+  deleteTicketHeading2,
 } from "../actions/ticketActions";
 import "./ticket.css";
 import axios from "axios";
@@ -21,6 +29,16 @@ const Ticket = ({ ticket }) => {
 
   const [button2, setButton2] = useState(false);
 
+  const [response, setResponse] = useState(false);
+
+  const editResponse = () => {
+    const getresponse = localStorage.getItem("response");
+    if (getresponse) {
+      setResponse(true);
+    }
+    console.log(response);
+  };
+
   const [button3, setButton3] = useState(false);
 
   const [headingName, setHeadingName] = useState(ticket.heading);
@@ -31,27 +49,14 @@ const Ticket = ({ ticket }) => {
   const [data, setData] = useState(ticket.heading);
 
   const dispatch = useDispatch();
-  const ticketDelete = useSelector((state) => state.ticketDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = ticketDelete;
-  const ticketHeadingCreate = useSelector((state) => state.ticketHeadingCreate);
-  const {
-    success: successHeadingCreate,
-    loading: loadingHeadingCreate,
-    error: errorHeadingCreate,
-  } = ticketHeadingCreate;
 
-  const ticketUpdate = useSelector((state) => state.ticketUpdate);
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = ticketUpdate;
+  const deleteheading = (id) => {
+    dispatch(deleteTicketHeading(ticket._id, {}));
+  };
 
-  useEffect(() => {}, [successDelete, successHeadingCreate]);
+  const deleteheading2 = (id) => {
+    dispatch(deleteTicketHeading2(ticket._id, {}));
+  };
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
@@ -61,6 +66,10 @@ const Ticket = ({ ticket }) => {
 
   const submitHandler = (e) => {
     dispatch(createTicketHeading(ticket._id, {}));
+  };
+
+  const submitHand = (e) => {
+    dispatch(createTicketHeading2(ticket._id, {}));
   };
   const handleChange = (e, i) => {
     const clonedData = [...headingName];
@@ -137,243 +146,317 @@ const Ticket = ({ ticket }) => {
     console.log("ticket.body[i]: ", ticket.body);
   };
 
+  const handleUpdated = () => {
+    if (localStorage.getItem("response")) {
+      updateTicke();
+    } else {
+      alert("You must be admin to update");
+    }
+  };
+
+  const handleBod = () => {
+    if (localStorage.getItem("response")) {
+      updateBody();
+    } else {
+      alert("You must be admin to update");
+    }
+  };
+
+  const handleHead = () => {
+    if (localStorage.getItem("response")) {
+      updateHeading2();
+    } else {
+      alert("You must be admin to update");
+    }
+  };
+  const handleBodyyy2 = () => {
+    if (localStorage.getItem("response")) {
+      updateBody2();
+    } else {
+      alert("You must be admin to update");
+    }
+  };
   return (
     <div>
-      {localStorage.getItem("response") ? (
-        <Button
-          variant="danger"
-          className="btn-sm"
-          onClick={() => deleteHandler(ticket._id)}
-        >
-          Delete Ticket
-        </Button>
-      ) : (
-        ""
-      )}
-      {localStorage.getItem("response") ? (
-        <Button
-          variant="primary"
-          className="btn-sm"
-          onClick={() => submitHandler(ticket._id)}
-        >
-          Add Heading
-        </Button>
-      ) : (
-        ""
-      )}
-      
+      <Row>
+        <Col md="6">
+          {localStorage.getItem("response") ? (
+            <Button
+              variant="danger "
+              className="btn-sm"
+              onClick={() => deleteHandler(ticket._id)}
+            >
+              Delete Ticket
+            </Button>
+          ) : (
+            ""
+          )}
 
-      <Table className="table table-borderless" variant="dark">
-        <thead>
-          <tr>
-            {ticket &&
-              ticket.heading.map((head, i) => (
-                <th key={i}>
-                  {" "}
-                  {input == false ? (
-                    <h6 className="head">{head}</h6>
+          {localStorage.getItem("response") ? (
+            <Button
+              variant="danger"
+              className="btn-sm"
+              onClick={() => deleteheading2(ticket._id)}
+            >
+              Delete Heading 2
+            </Button>
+          ) : (
+            ""
+          )}
+          {localStorage.getItem("response") ? (
+            <Button
+              variant="danger"
+              className="btn-sm"
+              onClick={() => deleteheading(ticket._id)}
+            >
+              Delete Heading
+            </Button>
+          ) : (
+            ""
+          )}
+        </Col>
+        <Col sm="4">
+          {localStorage.getItem("response") ? (
+            <Button
+              variant="primary"
+              className="btn-sm"
+              onClick={() => submitHand(ticket._id)}
+            >
+              Add Column in Row 2
+            </Button>
+          ) : (
+            ""
+          )}
+
+          {localStorage.getItem("response") ? (
+            <Button
+              variant="primary"
+              className="btn-sm"
+              onClick={() => submitHandler(ticket._id)}
+            >
+              Add Column in Row 1
+            </Button>
+          ) : (
+            ""
+          )}
+        </Col>
+      </Row>
+
+      <Row>
+        <Table className="table table-borderless" variant="dark">
+          <thead>
+            <tr>
+              {ticket &&
+                ticket.heading.map((head, i) => (
+                  <th key={i}>
+                    {" "}
+                    {input == false ? (
+                      <h6 className="head">{head}</h6>
+                    ) : (
+                      <InputGroup className="mb-3">
+                        <FormControl
+                          placeholder={head}
+                          name={head.headingName}
+                          value={head.headingName}
+                          onChange={(e) => testfunction(e, i)}
+                          // onChange={set}
+                          // value={hea  d && head.name}
+                          // onChange={(e) => {
+                          //   console.log(head._id);
+                          //   setArr(e.target.value);
+                          //   // ticket.heading[i].name = e.target.value
+                          //  console.log(e.target.name)
+                          // }}
+                        />
+                      </InputGroup>
+                    )}
+                  </th>
+                ))}
+
+              <th>
+                {button == false && localStorage.getItem("response") ? (
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      // key = product;
+
+                      setInput(true);
+                      setButton(true);
+                    }}
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      // submitHandle();
+
+                      handleUpdated();
+                      // key = product;
+                      setButton(false);
+                      setInput(false);
+                    }}
+                  >
+                    Update
+                  </Button>
+                )}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {ticket.body.map((body, i) => (
+                <td key={i}>
+                  {}
+                  {input1 == false ? (
+                    <div className="body"> {body}</div>
                   ) : (
                     <InputGroup className="mb-3">
                       <FormControl
-                        placeholder={head}
-                        name={head.headingName}
-                        value={head.headingName}
-                        onChange={(e) => testfunction(e, i)}
-                        // onChange={set}
-                        // value={hea  d && head.name}
-                        // onChange={(e) => {
-                        //   console.log(head._id);
-                        //   setArr(e.target.value);
-                        //   // ticket.heading[i].name = e.target.value
-                        //  console.log(e.target.name)
-                        // }}
+                        placeholder={body}
+                        name={body.bodyName}
+                        value={body.bodyName}
+                        onChange={(e) => testbody(e, i)}
                       />
                     </InputGroup>
                   )}
-                </th>
+                </td>
               ))}
+              <td>
+                {" "}
+                {button1 == false && localStorage.getItem("response") ? (
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      // key = product;
 
-            <th>
-              {button == false ? (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    // key = product;
-
-                    setInput(true);
-                    setButton(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    // submitHandle();
-                    updateTicke();
-                    // key = product;
-                    setButton(false);
-                    setInput(false);
-                  }}
-                >
-                  Update
-                </Button>
-              )}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {ticket.body.map((body, i) => (
-              <td key={i}>
-                {input1 == false ? (
-                  <div className="body"> {body}</div>
+                      setInput1(true);
+                      setButton1(true);
+                    }}
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
                 ) : (
-                  <InputGroup className="mb-3">
-                    <FormControl
-                      placeholder={body}
-                      name={body.bodyName}
-                      value={body.bodyName}
-                      onChange={(e) => testbody(e, i)}
-                    />
-                  </InputGroup>
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                     
+                      handleBod();
+                      setButton1(false);
+                      setInput1(false);
+                    }}
+                  >
+                    Update
+                  </Button>
                 )}
               </td>
-            ))}
-            <td>
-              {" "}
-              {button1 == false ? (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    // key = product;
+            </tr>
+            <tr>
+              {ticket.heading2.map((head2, i) => (
+                <td key={i}>
+                  {input2 == false ? (
+                    <h6 className="head">
+                      <b>{head2}</b>
+                    </h6>
+                  ) : (
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        placeholder={head2}
+                        name={head2.bodyName}
+                        value={head2.bodyName}
+                        onChange={(e) => testHeading(e, i)}
+                      />
+                    </InputGroup>
+                  )}
+                </td>
+              ))}
+              <td>
+                {" "}
+                {button2 == false && localStorage.getItem("response") ? (
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      // key = product;
 
-                    setInput1(true);
-                    setButton1(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    updateBody();
-
-                    setButton1(false);
-                    setInput1(false);
-                  }}
-                >
-                  Update
-                </Button>
-              )}
-            </td>
-          </tr>
-          <tr>
-            {ticket.heading2.map((head2, i) => (
-              <td key={i}>
-                {input2 == false ? (
-                  <h6 className="head">
-                    <b>{head2}</b>
-                  </h6>
+                      setInput2(true);
+                      setButton2(true);
+                    }}
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
                 ) : (
-                  <InputGroup className="mb-3">
-                    <FormControl
-                      placeholder={head2}
-                      name={head2.bodyName}
-                      value={head2.bodyName}
-                      onChange={(e) => testHeading(e, i)}
-                    />
-                  </InputGroup>
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                     
+                      handleHead();
+                      setButton2(false);
+                      setInput2(false);
+                    }}
+                  >
+                    Update
+                  </Button>
                 )}
               </td>
-            ))}
-            <td>
-              {" "}
-              {button2 == false ? (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    // key = product;
+            </tr>
+            <tr>
+              {ticket.body2.map((body2, i) => (
+                <td key={i}>
+                  {input3 == false ? (
+                    <b>{body2}</b>
+                  ) : (
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        placeholder={body2}
+                        name={body2.bodyName}
+                        value={body2.bodyName}
+                        onChange={(e) => testBody2(e, i)}
+                      />
+                    </InputGroup>
+                  )}
+                </td>
+              ))}
+              <td>
+                {" "}
+                {button3 == false && localStorage.getItem("response") ? (
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      // key = product;
 
-                    setInput2(true);
-                    setButton2(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    updateHeading2();
-
-                    setButton2(false);
-                    setInput2(false);
-                  }}
-                >
-                  Update
-                </Button>
-              )}
-            </td>
-          </tr>
-          <tr>
-            {ticket.body2.map((body2, i) => (
-              <td key={i}>
-                {input3 == false ? (
-                  <b>{body2}</b>
+                      setInput3(true);
+                      setButton3(true);
+                    }}
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
                 ) : (
-                  <InputGroup className="mb-3">
-                    <FormControl
-                      placeholder={body2}
-                      name={body2.bodyName}
-                      value={body2.bodyName}
-                      onChange={(e) => testBody2(e, i)}
-                    />
-                  </InputGroup>
+                  <Button
+                    variant="primary"
+                    className="btn-sm"
+                    onClick={() => {
+                      handleBodyyy2();
+                      
+                      setButton3(false);
+                      setInput3(false);
+                    }}
+                  >
+                    Update
+                  </Button>
                 )}
               </td>
-            ))}
-            <td>
-              {" "}
-              {button3 == false ? (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    // key = product;
-
-                    setInput3(true);
-                    setButton3(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  className="btn-sm"
-                  onClick={() => {
-                    updateBody2();
-
-                    setButton3(false);
-                    setInput3(false);
-                  }}
-                >
-                  Update
-                </Button>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+            </tr>
+          </tbody>
+        </Table>
+      </Row>
     </div>
   );
 };

@@ -8,7 +8,6 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import Email from "./pages/Email";
-import Dashboard from "./pages/Dashboard";
 import Navbars from "./pages/Navbar";
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
             <Route path="/create" component={CreateTicket} />
             <Route path="/login" component={Login} />
             <Route path="/sendmail" component={Email} />
-            <Route path="/dashboard" component={Dashboard} />
+            
             
 
           </Container>

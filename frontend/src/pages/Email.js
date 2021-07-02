@@ -6,10 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Email=()=>{
-  const notify = () => toast("Email sent Succesfully!");
+  const notify = () => toast(`Email sent to ${email}`);
   
     const [name,setName]=useState("");
     const [email,setEmail]=useState("");
+    const [cc,setCC]=useState("")
     const useremail=localStorage.getItem("email");
     console.log('email: ', useremail);
     
@@ -19,7 +20,8 @@ const Email=()=>{
 
       const datatosend={
         name,
-        email
+        email,
+        cc
       }
       axios.post(`/api/sendmail` ,datatosend)
       console.log(datatosend)
@@ -54,6 +56,17 @@ const Email=()=>{
                     value={email}
                     name="email"
                     onChange={(e)=>setEmail(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId="name">
+                  <Form.Label>CC</Form.Label>
+                  <Form.Control
+                    type="cc"
+                    placeholder="Enter CC"
+                    value={cc}
+                    name="cc"
+                    onChange={(e)=>setCC(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
 

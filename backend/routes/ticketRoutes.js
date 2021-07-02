@@ -13,7 +13,11 @@ updateTicke,
 updateHeading,
 updateHeading2,
 updateBody2,
-deleteAll
+deleteAll,
+duplicateTicket,
+createHeading2,
+removeHeading,
+removeHeading2,
 
 
 } from '../controllers/ticketController.js'
@@ -26,6 +30,9 @@ router
   .get(getTicketsById)
   .put(updateTicket)
   router.route('/:id/headings').post(createHeading)
+  router.route('/:id/headings').delete(removeHeading)
+  router.route('/:id/headings2').delete(removeHeading2)
+  router.route('/:id/headings2').post(createHeading2)
   router.route('/:ticketId/headings/:headingId').put(updateTicket);
   router.route('/:ticketId/body/:bodyId').put(updateBody);
   router.post('/:id/body',updateTicke)
@@ -33,5 +40,5 @@ router
   router.post('/:id/heading2',updateHeading2)
   router.post('/:id/body2',updateBody2)
   router.delete('/',deleteAll)
-
+  router.post('/:id/duplicate',duplicateTicket)
   export default router

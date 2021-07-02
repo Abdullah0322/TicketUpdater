@@ -45,15 +45,10 @@ const deleteTicket = asyncHandler(async (req, res) => {
   }
 });
 
-
-
 const deleteAll = asyncHandler(async (req, res) => {
- 
- 
-  const tickets = await Ticket
- await tickets.remove();
-    res.json({ message: "Ticket removed" });
- 
+  const tickets = await Ticket;
+  await tickets.remove();
+  res.json({ message: "Ticket removed" });
 });
 
 // const Ticketcreate = asyncHandler(async (req, res) => {
@@ -197,27 +192,42 @@ const createHeading = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Heading added" });
 });
 
-const updateTicke = asyncHandler(async (req, res) => {
-  const {body} = req;
+const removeHeading = asyncHandler(async (req, res) => {
   const ticket = await Ticket.findById(req.params.id);
+  const head = "sample name";
 
-  // const body = ticket.body;
-  // console.log('body: ', body);
-  //let bodyName = ["name","ok","check"]
+  ticket.heading.pop(head);
+  ticket.body.pop(head);
 
-  // body.splicebody(body.indexOf("sample name"), 1, "newValue");
-  // var arr = new Array(10), anotherArr = [1, 2, 3], result;
-  ticket.body = body
+  await ticket.save();
+  res.status(201).json({ message: "Heading removed" });
+});
 
-  const newticket=await ticket.save();
-  res.json(newticket)
-  console.log('this is the ticket body',ticket.body)
+const removeHeading2 = asyncHandler(async (req, res) => {
+  const ticket = await Ticket.findById(req.params.id);
+  const head = "sample name";
 
+  ticket.heading2.pop(head);
+  ticket.body2.pop(head);
+
+  await ticket.save();
+  res.status(201).json({ message: "Heading removed" });
 });
 
 
-const updateHeading = asyncHandler(async (req, res) => {
-  const {body} = req;
+const createHeading2 = asyncHandler(async (req, res) => {
+  const ticket = await Ticket.findById(req.params.id);
+  const head = "sample name";
+
+  ticket.heading2.push(head);
+  ticket.body2.push(head);
+
+  await ticket.save();
+  res.status(201).json({ message: "Heading added" });
+});
+
+const updateTicke = asyncHandler(async (req, res) => {
+  const { body } = req;
   const ticket = await Ticket.findById(req.params.id);
 
   // const body = ticket.body;
@@ -226,16 +236,32 @@ const updateHeading = asyncHandler(async (req, res) => {
 
   // body.splicebody(body.indexOf("sample name"), 1, "newValue");
   // var arr = new Array(10), anotherArr = [1, 2, 3], result;
-  ticket.heading = body
+  ticket.body = body;
 
-  const newticket=await ticket.save();
-  res.json(newticket)
-  console.log('this is the ticket body',ticket.body)
+  const newticket = await ticket.save();
+  res.json(newticket);
+  console.log("this is the ticket body", ticket.body);
+});
 
+const updateHeading = asyncHandler(async (req, res) => {
+  const { body } = req;
+  const ticket = await Ticket.findById(req.params.id);
+
+  // const body = ticket.body;
+  // console.log('body: ', body);
+  //let bodyName = ["name","ok","check"]
+
+  // body.splicebody(body.indexOf("sample name"), 1, "newValue");
+  // var arr = new Array(10), anotherArr = [1, 2, 3], result;
+  ticket.heading = body;
+
+  const newticket = await ticket.save();
+  res.json(newticket);
+  console.log("this is the ticket body", ticket.body);
 });
 
 const updateHeading2 = asyncHandler(async (req, res) => {
-  const {body} = req;
+  const { body } = req;
   const ticket = await Ticket.findById(req.params.id);
 
   // const body = ticket.body;
@@ -244,16 +270,15 @@ const updateHeading2 = asyncHandler(async (req, res) => {
 
   // body.splicebody(body.indexOf("sample name"), 1, "newValue");
   // var arr = new Array(10), anotherArr = [1, 2, 3], result;
-  ticket.heading2 = body
+  ticket.heading2 = body;
 
-  const newticket=await ticket.save();
-  res.json(newticket)
-  console.log('this is the ticket body',ticket.body)
-
+  const newticket = await ticket.save();
+  res.json(newticket);
+  console.log("this is the ticket body", ticket.body);
 });
 
 const updateBody2 = asyncHandler(async (req, res) => {
-  const {body} = req;
+  const { body } = req;
   const ticket = await Ticket.findById(req.params.id);
 
   // const body = ticket.body;
@@ -262,15 +287,25 @@ const updateBody2 = asyncHandler(async (req, res) => {
 
   // body.splicebody(body.indexOf("sample name"), 1, "newValue");
   // var arr = new Array(10), anotherArr = [1, 2, 3], result;
-  ticket.body2 = body
+  ticket.body2 = body;
 
-  const newticket=await ticket.save();
-  res.json(newticket)
-  console.log('this is the ticket body',ticket.body2)
-
+  const newticket = await ticket.save();
+  res.json(newticket);
+  console.log("this is the ticket body", ticket.body2);
 });
 
+const duplicateTicket = asyncHandler(async (req, res) => {
+  Ticket.findOne({_id:req.params.id}, function(err,Ticket){
+    if(err) handleErr(err, res, 'Something went wrong when trying to find calculation by id');
+  
+    var plainCalculation = Ticket.toObject();
+  
+  
+    delete plainCalculation._id;
+    console.log(plainCalculation); //no _id here
+  });
 
+});
 
 export {
   getTickets,
@@ -284,5 +319,9 @@ export {
   updateHeading,
   updateHeading2,
   updateBody2,
-  deleteAll
+  deleteAll,
+  duplicateTicket,
+  createHeading2,
+  removeHeading ,
+  removeHeading2,
 };

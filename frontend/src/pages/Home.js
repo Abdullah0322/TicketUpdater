@@ -53,6 +53,31 @@ const Home = ({ match }) => {
     success: successUpdate,
   } = ticketUpdate;
 
+  const ticketHeading2Create = useSelector(
+    (state) => state.ticketHeading2Create
+  );
+  const {
+    success: successHeading2Create,
+    loading: loadingHeading2Create,
+    error: errorHeading2Create,
+  } = ticketHeading2Create;
+
+  const ticketHeadingDelete = useSelector((state) => state.ticketHeadingDelete);
+  const {
+    success: successHeadingDelete,
+    loading: loadingHeadingDelete,
+    error: errorHeadingDelete,
+  } = ticketHeadingDelete;
+
+  const ticketHeading2Delete = useSelector(
+    (state) => state.ticketHeading2Delete
+  );
+  const {
+    success: successHeading2Delete,
+    loading: loadingHeading2Delete,
+    error: errorHeading2Delete,
+  } = ticketHeading2Delete;
+
   const [localtickets, setTickets] = useState([]);
   let comment = JSON.parse(localStorage.getItem("response"));
 
@@ -67,6 +92,9 @@ const Home = ({ match }) => {
     createdTicket,
     successHeadingCreate,
     successUpdate,
+    successHeading2Create,
+    successHeadingDelete,
+    successHeading2Delete,
   ]);
 
   useEffect(() => {
@@ -83,12 +111,12 @@ const Home = ({ match }) => {
     dispatch(createTicket());
   };
 
-  const deleteAll=()=>{
-
-    axios.delete('api/tickets/')
+  const deleteAll = () => {
+    axios.delete("api/tickets/");
     window.location.reload();
-    console.log("tickets delete")
-  }
+    console.log("tickets delete");
+  };
+
   return (
     <React.Fragment>
       {loading ? (
@@ -97,118 +125,131 @@ const Home = ({ match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <Container fluid>
+          {localStorage.getItem("response")?
           <Row>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-chart text-warning"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Number of Tickets</p>
-                        <Card.Title as="h4">{tickets.length}</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">Total Amount of Tickets</div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                   
-                    <Col md="12">
-                      <div className="numbers">
-                      {localStorage.getItem("response")?
-       <Button className="my-3" onClick={createProductHandler}>
-       <i className="fas fa-plus"></i> Create A New Ticket
-     </Button>
-    :
-    "You must be admin to create Ticket" 
-    }
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="far fa-calendar-alt mr-1"></i>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-chart text-warning"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">Number of Tickets</p>
+                      <Card.Title as="h4">{tickets.length}</Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div className="stats">Total Amount of Tickets</div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col md="12">
+                    <div className="numbers">
+                      {localStorage.getItem("response") ? (
+                        <Button
+                          className="my-3"
+                          onClick={createProductHandler}
+                        >
+                          <i className="fas fa-plus"></i> Create New Row
+                        </Button>
+                      ) : (
+                        <h6>You must be admin to create </h6>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-calendar-alt mr-1"></i>
                   Ticket Creation
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-circle-09"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">User Details</p>
-                        <Card.Title as="h6">{comment?comment.data.user.name:"Please Login"}</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                   
-                  {comment?comment.data.user.email:""}
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-light-3 text-success"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Delete All</p>
-                        <Card.Title as="h4"> <Button
-          variant="danger"
-          className="btn-sm"
-          onClick={deleteAll}
-        >
-          Delete Tickets
-        </Button></Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="far fa-calendar-alt mr-1"></i>
-                    Last day
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-          </Row>
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-circle-09"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">User Details</p>
+                      <Card.Title as="h6">
+                        {comment ? comment.data.user.name : "Please Login"}
+                      </Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div className="stats">
+                  {comment ? comment.data.user.email : ""}
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-light-3 text-success"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">Delete All</p>
+                      <Card.Title as="h4">
+                        {" "}
+                        {localStorage.getItem("response")?
+                        <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={deleteAll}
+                      >
+                        Delete All Rows
+                      </Button>
+                      :<h6>You must be admin to Delete</h6>
+                      
+                      }
+                        
+                      </Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-calendar-alt mr-1"></i>
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+        </Row>
+        :""  
+        }
+        
           <Row>
-           
             {localtickets &&
               localtickets.map((ticket) => (
                 <Col key={ticket._id} md={12}>

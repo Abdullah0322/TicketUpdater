@@ -12,6 +12,8 @@
     "bootstrap": "^5.0.2",
     "google-auth-library": "^7.1.2",
     "immutability-helper": "^3.1.1",
+    "jspdf": "^2.3.1",
+    "jspdf-autotable": "^3.5.15",
     "jwt-decode": "^3.1.2",
     "nodemailer": "^6.6.2",
     "react": "^16.13.1",
