@@ -8,7 +8,6 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import Email from "./pages/Email";
-import Navbars from "./pages/Navbar";
 
 function App() {
   return (
