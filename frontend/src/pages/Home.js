@@ -14,6 +14,7 @@ import {
   deleteTicket,
   createTicket,
 } from "../actions/ticketActions";
+import Meta from "../components/Meta";
 
 const Home = ({ match }) => {
   const keyword = match.params.keyword;
@@ -69,6 +70,15 @@ const Home = ({ match }) => {
     error: errorHeadingDelete,
   } = ticketHeadingDelete;
 
+  const ticketDuplicate = useSelector((state) => state.ticketDuplicate);
+  const {
+    success: successticketDuplicate,
+    loading: loadingticketDuplicate,
+    error: errorticketDuplicate,
+  } = ticketDuplicate;
+
+
+
   const ticketHeading2Delete = useSelector(
     (state) => state.ticketHeading2Delete
   );
@@ -90,18 +100,19 @@ const Home = ({ match }) => {
     successCreate,
     successDelete,
     createdTicket,
-    successHeadingCreate,
+    successticketDuplicate,
+    ticketDuplicate,
+    // successHeadingCreate,
     successUpdate,
-    successHeading2Create,
-    successHeadingDelete,
-    successHeading2Delete,
+    // successHeading2Create,
+    // successHeadingDelete,
+    // successHeading2Delete,
   ]);
 
   useEffect(() => {
     setTickets(tickets);
   }, [tickets]);
 
-  const [name, setName] = useState("");
 
   // useEffect(()=>{
 
@@ -119,6 +130,7 @@ const Home = ({ match }) => {
 
   return (
     <React.Fragment>
+      <Meta></Meta>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -131,12 +143,8 @@ const Home = ({ match }) => {
             <Card className="card-stats">
               <Card.Body>
                 <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-chart text-warning"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
+                 
+                  <Col xs="12">
                     <div className="numbers">
                       <p className="card-category">Number of Tickets</p>
                       <Card.Title as="h4">{tickets.length}</Card.Title>
@@ -155,6 +163,7 @@ const Home = ({ match }) => {
               <Card.Body>
                 <Row>
                   <Col md="12">
+                    
                     <div className="numbers">
                       {localStorage.getItem("response") ? (
                         <Button
@@ -183,12 +192,8 @@ const Home = ({ match }) => {
             <Card className="card-stats">
               <Card.Body>
                 <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-circle-09"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
+                  
+                  <Col xs="12">
                     <div className="numbers">
                       <p className="card-category">User Details</p>
                       <Card.Title as="h6">
@@ -210,12 +215,8 @@ const Home = ({ match }) => {
             <Card className="card-stats">
               <Card.Body>
                 <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-light-3 text-success"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
+                 
+                  <Col xs="8">
                     <div className="numbers">
                       <p className="card-category">Delete All</p>
                       <Card.Title as="h4">
@@ -248,7 +249,8 @@ const Home = ({ match }) => {
         </Row>
         :""  
         }
-        
+        <br></br>
+        <br></br>
           <Row>
             {localtickets &&
               localtickets.map((ticket) => (

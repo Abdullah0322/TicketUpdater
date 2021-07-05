@@ -40,5 +40,5 @@ router
   router.post('/:id/heading2',updateHeading2)
   router.post('/:id/body2',updateBody2)
   router.delete('/',deleteAll)
-  router.post('/:id/duplicate',duplicateTicket)
+  router.post('/duplicate',duplicateTicket)
   export default router

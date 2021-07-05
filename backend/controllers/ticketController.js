@@ -85,6 +85,7 @@ const createTicket = asyncHandler(async (req, res) => {
   res.status(201).json(createdTicket);
 });
 
+
 const updateTicket = asyncHandler(async (req, res) => {
   const { ticketId, headingId } = req.params;
 
@@ -194,10 +195,9 @@ const createHeading = asyncHandler(async (req, res) => {
 
 const removeHeading = asyncHandler(async (req, res) => {
   const ticket = await Ticket.findById(req.params.id);
-  const head = "sample name";
-
-  ticket.heading.pop(head);
-  ticket.body.pop(head);
+ 
+  ticket.heading.pop();
+  ticket.body.pop();
 
   await ticket.save();
   res.status(201).json({ message: "Heading removed" });
@@ -205,10 +205,10 @@ const removeHeading = asyncHandler(async (req, res) => {
 
 const removeHeading2 = asyncHandler(async (req, res) => {
   const ticket = await Ticket.findById(req.params.id);
-  const head = "sample name";
+  
 
-  ticket.heading2.pop(head);
-  ticket.body2.pop(head);
+  ticket.heading2.pop();
+  ticket.body2.pop();
 
   await ticket.save();
   res.status(201).json({ message: "Heading removed" });
@@ -295,17 +295,58 @@ const updateBody2 = asyncHandler(async (req, res) => {
 });
 
 const duplicateTicket = asyncHandler(async (req, res) => {
-  Ticket.findOne({_id:req.params.id}, function(err,Ticket){
-    if(err) handleErr(err, res, 'Something went wrong when trying to find calculation by id');
-  
-    var plainCalculation = Ticket.toObject();
-  
-  
-    delete plainCalculation._id;
-    console.log(plainCalculation); //no _id here
-  });
 
+
+
+  // const ticket= await Ticket.findById(req.params.id)
+
+  // ticket.toObject();
+  // console.log(ticket)
+  // delete ticket._id
+  // await ticket.save();
+
+  // var copy = Ticket.findOne();
+  // for (var i = 0; i< 30; i++){ 
+  //     copy._id = new ObjectId(); 
+  //     Ticket.insert(copy);
+  // }
+  
+//   Ticket.find({_id:req.params.id}).then(Ticket => {
+//     Ticket.forEach(function(ticket){
+//        Ticket.insert(ticket)
+//     });
+// })
+
+
+  // });
+  // Ticket.find({_id:req.params.id}).then((Ticket) => {
+  //   Ticket.forEach(() => {
+  //     Ticket.insert(ticket)
+  //   });
+  // });
+  // Ticket.find().forEach(function(doc){
+  //   tickets.insert(doc);
+// })
+
+const ticket = new Ticket(req.body);
+
+const createdTicket = await ticket.save();
+res.status(201).json(createdTicket);
 });
+
+
+//  Ticket.findOne({_id:req.params.id}) 
+
+// const plain= Ticket.toObject();
+
+// console.log(plain)
+// Ticket.find({_id:req.params.id}).forEach(function(doc){
+//   var newDoc = doc;
+//   delete newDoc._id;
+//   Ticket.insert(newDoc);
+// })
+
+
 
 export {
   getTickets,

@@ -39,6 +39,12 @@ TICKET_DELETE_HEADING_FAIL,
  TICKET_DELETE_HEADING_RESET,
 
 
+TICKET_DUPLICATE_REQUEST,
+TICKET_DUPLICATE_SUCCESS ,
+TICKET_DUPLICATE_FAIL,
+TICKET_DUPLICATE_RESET
+
+
 
 }from '../constants/ticketConstants'
 export const ticketListReducer = (state = { tickets: [] }, action) => {
@@ -167,3 +173,19 @@ export const ticketListReducer = (state = { tickets: [] }, action) => {
     }
   }
   
+
+  export const ticketDuplicateReducer = (state = { ticket: {} }, action) => {
+    switch (action.type) {
+      case TICKET_DUPLICATE_REQUEST:
+        return { loading: true }
+      case TICKET_DUPLICATE_SUCCESS:
+        return { loading: false, success: true, ticket: action.payload }
+      case TICKET_DUPLICATE_FAIL:
+        return { loading: false, error: action.payload }
+      case TICKET_DUPLICATE_RESET:
+          return { ticket: {} }
+      default:
+        return state
+
+    }
+  }

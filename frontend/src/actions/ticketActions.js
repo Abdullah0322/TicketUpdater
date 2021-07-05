@@ -31,6 +31,10 @@ TICKET_DELETE_HEADING2_SUCCESS,
  TICKET_DELETE_HEADING_SUCCESS,
 TICKET_DELETE_HEADING_FAIL,
  TICKET_DELETE_HEADING_RESET,
+
+TICKET_DUPLICATE_REQUEST,
+TICKET_DUPLICATE_SUCCESS ,
+TICKET_DUPLICATE_FAIL
 } from "../constants/ticketConstants";
 
 export const listTickets =
@@ -283,6 +287,37 @@ export const updateTicketbody = (ticket) => async (dispatch) => {
 
     dispatch({
       type: TICKET_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+
+export const duplicateTicket = (ticket) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TICKET_DUPLICATE_REQUEST,
+    });
+
+    delete ticket._id
+    const { data } = await axios.post(
+      `/api/tickets/duplicate`,ticket
+    );
+
+    dispatch({
+      type: TICKET_DUPLICATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({ type: TICKET_LIST_SUCCESS, payload: data });
+  
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: TICKET_DUPLICATE_FAIL,
       payload: message,
     });
   }

@@ -8,7 +8,9 @@ import {
      ticketListReducer,  
      ticketUpdateReducer,
      ticketHeadingDeleteReducer,
-     ticketHeading2DeleteReducer} from './reducers/ticketReducers'
+     ticketHeading2DeleteReducer,
+    ticketDuplicateReducer
+    } from './reducers/ticketReducers'
  import { composeWithDevTools } from 'redux-devtools-extension'
 
   const reducer = combineReducers({
@@ -19,7 +21,8 @@ import {
      ticketUpdate:ticketUpdateReducer,
      ticketHeading2Create:ticketHeading2CreateReducer,
      ticketHeadingDelete:ticketHeadingDeleteReducer,
-     ticketHeading2Delete:ticketHeading2DeleteReducer
+     ticketHeading2Delete:ticketHeading2DeleteReducer,
+     ticketDuplicate:ticketDeleteReducer
   
 
    })

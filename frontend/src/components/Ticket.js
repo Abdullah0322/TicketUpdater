@@ -15,9 +15,12 @@ import {
   createTicketHeading2,
   deleteTicketHeading,
   deleteTicketHeading2,
+  createTicket,
+  duplicateTicket,
 } from "../actions/ticketActions";
 import "./ticket.css";
 import axios from "axios";
+import Loader from "./Loader";
 
 const Ticket = ({ ticket }) => {
   const [input, setInput] = useState(false);
@@ -48,13 +51,22 @@ const Ticket = ({ ticket }) => {
 
   const [data, setData] = useState(ticket.heading);
 
+
+
+
+
   const dispatch = useDispatch();
 
   const deleteheading = (id) => {
+    ticket.heading.pop();
+    ticket.body.pop();
+    
     dispatch(deleteTicketHeading(ticket._id, {}));
   };
 
   const deleteheading2 = (id) => {
+    ticket.heading2.pop();
+    ticket.body2.pop();
     dispatch(deleteTicketHeading2(ticket._id, {}));
   };
 
@@ -65,10 +77,19 @@ const Ticket = ({ ticket }) => {
   };
 
   const submitHandler = (e) => {
+  const head = "sample name";
+
+  ticket.heading.push(head);
+  ticket.body.push(head);
+
     dispatch(createTicketHeading(ticket._id, {}));
   };
 
   const submitHand = (e) => {
+    const head = "sample name";
+
+  ticket.heading2.push(head);
+  ticket.body2.push(head);
     dispatch(createTicketHeading2(ticket._id, {}));
   };
   const handleChange = (e, i) => {
@@ -176,47 +197,78 @@ const Ticket = ({ ticket }) => {
       alert("You must be admin to update");
     }
   };
+
+const handleDuplicate=()=>{
+
+// const getticket= ticket;
+// delete getticket._id
+// console.log(getticket)
+// console.log(getticket.heading)
+// axios.post(`/api/tickets/duplicate`,getticket).then()
+// console.log(getticket)
+dispatch(duplicateTicket(ticket))
+window.location.reload()
+
+
+}
+
+
+
+
   return (
     <div>
-      <Row>
-        <Col md="6">
+    
+       
+      <div className="buttons">
+       <Row>
           {localStorage.getItem("response") ? (
             <Button
               variant="danger "
               className="btn-sm"
               onClick={() => deleteHandler(ticket._id)}
             >
-              Delete Ticket
+              Delete 
             </Button>
           ) : (
             ""
           )}
-
+  {localStorage.getItem("response") ? (
+            <Button
+              variant="danger"
+              className="btn-sm"
+              onClick={() => deleteheading(ticket._id)}
+            >
+              Delete Column in Row 1
+            </Button>
+          ) : (
+            ""
+          )}
           {localStorage.getItem("response") ? (
             <Button
               variant="danger"
               className="btn-sm"
               onClick={() => deleteheading2(ticket._id)}
             >
-              Delete Heading 2
+              Delete Column in Row 2
             </Button>
           ) : (
             ""
           )}
-          {localStorage.getItem("response") ? (
+        
+      <Col>
+        
+      {localStorage.getItem("response") ? (
             <Button
-              variant="danger"
+              variant="primary"
               className="btn-sm"
-              onClick={() => deleteheading(ticket._id)}
+              onClick={handleDuplicate}
             >
-              Delete Heading
+             Duplicate
             </Button>
           ) : (
             ""
           )}
-        </Col>
-        <Col sm="4">
-          {localStorage.getItem("response") ? (
+           {localStorage.getItem("response") ? (
             <Button
               variant="primary"
               className="btn-sm"
@@ -228,7 +280,7 @@ const Ticket = ({ ticket }) => {
             ""
           )}
 
-          {localStorage.getItem("response") ? (
+      {localStorage.getItem("response") ? (
             <Button
               variant="primary"
               className="btn-sm"
@@ -239,9 +291,13 @@ const Ticket = ({ ticket }) => {
           ) : (
             ""
           )}
-        </Col>
-      </Row>
-
+       
+         
+         
+          </Col>
+       </Row>
+       </div>
+     
       <Row>
         <Table className="table table-borderless" variant="dark">
           <thead>
