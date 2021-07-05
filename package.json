@@ -1,7 +1,7 @@
 {
-  "name": "mystore",
+  "name": "Ticket",
   "version": "1.0.0",
-  "description": "MERN shopping cart app",
+  "description": "Ticket Update",
   "main": "server.js",
   "type": "module",
   "scripts": {
